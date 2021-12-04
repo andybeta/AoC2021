@@ -20,6 +20,14 @@ def check_num(board,num): # check a board for the called number
         row = ["X" if x == num else x for x in row] # replace with X if found
         board[i] = row
 
+def rot_board(board): #rotates the board 90 deg
+    board_rot=[]
+    for i in range(size):
+        new_row=[]
+        for j in range(size):
+            new_row.append(board[j][i])
+        board_rot.append(new_row)
+    return board_rot
 
 
 def check_bingo(board): # checks a board for a bingo
@@ -28,7 +36,8 @@ def check_bingo(board): # checks a board for a bingo
         if res:
             return res
 
-    board_rot = [[board[j][i] for j in range(len(board))] for i in range(len(board[0]))] # rotate the board 90deg
+    #board_rot = [[board[j][i] for j in range(len(board))] for i in range(len(board[0]))] # rotate the board 90deg
+    board_rot = rot_board(board) # wrote my own def
     for row in board_rot:
         res=all(numbers == "X" for numbers in row) # if a row (was col) is all Xs then return true
         if res:
@@ -48,7 +57,7 @@ i=0
 for line in lines: # Load the data into the boards
     row = list(re.split(' +',line.strip()))
     board.append(row)
-    if i == size-1: # hacky, should be variable
+    if i == size-1:
         boards.append(board)
         numboards += 1
         board=[]
