@@ -25,9 +25,7 @@ print(fuel)
 
 # part 2
 
-fuel=0
 least_fuel=0
-best_dir=0
 
 for crab_pos in range(0,crabs[len(crabs)-1]):
     fuel = 0
