@@ -1,39 +1,33 @@
 import sys
-import math
+import re
+from pprint import pprint
 
 path = sys.argv[1]
+
+counter=[0]*10
 
 read = []
 with open(path, 'r') as file:
     read = file.read().splitlines()
 
-input = read[0].split(",")
-crabs = [int(crab) for crab in input]
+lines = []
+for line in read:
+    pre,post=re.split(" \| ",line)
+    pre=re.split(" ",pre)
+    post=re.split(" ",post)
+    row = [pre,post]
+    lines.append(row)
 
-crabs.sort()
+    for number in post:
+        if len(number) == 2:
+            counter[1] += 1
+        if len(number) == 3:
+            counter[7] += 1
+        if len(number) == 4:
+            counter[4] += 1
+        if len(number) == 7:
+            counter[8] += 1
 
-mid = int(math.ceil(len(crabs)/2))
-midcrab = crabs[mid]
-
-fuel = 0
-for crab in crabs:
-    distance = abs(crab-midcrab)
-    fuel += distance
-
-print(fuel)
+print(sum(counter))
 
 
-# part 2
-
-least_fuel=0
-
-for crab_pos in range(0,crabs[len(crabs)-1]):
-    fuel = 0
-    for crab in crabs:
-        distance = abs(crab_pos - crab)
-        fuel += distance * (distance + 1) / 2
-
-    if (least_fuel > 0 and fuel < least_fuel) or least_fuel == 0:
-        least_fuel = fuel
-
-print(least_fuel)
